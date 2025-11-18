@@ -35,7 +35,7 @@ const PostList = props => {
         const user = usersResult.find(u => u.id === post.userId);
         return {
           ...post,
-          username: user?.username || 'Unknown',
+          user: user,
         };
       });
       setPostsData(mergedPosts);
@@ -53,8 +53,7 @@ const PostList = props => {
       let text = searchText.toLowerCase();
       const results = postsData.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(text);
-        const usernameMatch = post.username.toLowerCase().includes(text);
-
+        const usernameMatch = post.user.username.toLowerCase().includes(text);
         return titleMatch || usernameMatch;
       });
       setPostsData(results);
@@ -104,8 +103,11 @@ const PostList = props => {
       >
         <View style={styles.cardDetailsView}>
           <Text style={styles.cardTitleText}>{item.title}</Text>
-          <Text style={styles.cardNameText} onPress={() => onNameClicked(user)}>
-            {item.username}
+          <Text
+            style={styles.cardNameText}
+            onPress={() => onNameClicked(item.user)}
+          >
+            {item.user.username}
           </Text>
         </View>
       </TouchableOpacity>
