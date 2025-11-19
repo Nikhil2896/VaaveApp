@@ -4,11 +4,10 @@ import Theme from '../constants/Theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const User = props => {
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     setUserData(props.route.params.params.data);
-    console.log(props.route.params.params.data);
   }, []);
 
   const DetailsView = headprops => {
@@ -28,41 +27,45 @@ const User = props => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.mainView}>
-        <Text style={styles.nameText}>{userData.name}</Text>
-        <Text style={styles.userNameText}>@ {userData.username}</Text>
-        <View style={styles.detailsMainView}>
-          <DetailsView
-            iconName={'mail-outline'}
-            heading={'EMAIL'}
-            detail={userData.email}
-          />
-          <DetailsView
-            iconName={'tv-outline'}
-            heading={'WEBSITE'}
-            detail={userData.website}
-          />
-          <DetailsView
-            iconName={'business-outline'}
-            heading={'COMPANY'}
-            detail={userData.company.name}
-          />
-          <DetailsView
-            iconName={'location-outline'}
-            heading={'CITY'}
-            detail={userData.address.city}
-          />
+    <>
+      {userData && (
+        <View style={styles.container}>
+          <View style={styles.mainView}>
+            <Text style={styles.nameText}>{userData.name}</Text>
+            <Text style={styles.userNameText}>@ {userData.username}</Text>
+            <View style={styles.detailsMainView}>
+              <DetailsView
+                iconName={'mail-outline'}
+                heading={'EMAIL'}
+                detail={userData.email}
+              />
+              <DetailsView
+                iconName={'tv-outline'}
+                heading={'WEBSITE'}
+                detail={userData.website}
+              />
+              <DetailsView
+                iconName={'business-outline'}
+                heading={'COMPANY'}
+                detail={userData.company.name}
+              />
+              <DetailsView
+                iconName={'location-outline'}
+                heading={'CITY'}
+                detail={userData.address.city}
+              />
+            </View>
+          </View>
+          <View style={styles.profileView}>
+            <Icon
+              name="person-outline"
+              size={50}
+              color={Theme.colors.primaryDark}
+            />
+          </View>
         </View>
-      </View>
-      <View style={styles.profileView}>
-        <Icon
-          name="person-outline"
-          size={50}
-          color={Theme.colors.primaryDark}
-        />
-      </View>
-    </View>
+      )}
+    </>
   );
 };
 
