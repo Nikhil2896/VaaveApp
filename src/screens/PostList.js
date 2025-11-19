@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -103,12 +103,15 @@ const PostList = props => {
       >
         <View style={styles.cardDetailsView}>
           <Text style={styles.cardTitleText}>{item.title}</Text>
-          <Text
-            style={styles.cardNameText}
-            onPress={() => onNameClicked(item.user)}
-          >
-            {item.user.username}
-          </Text>
+          <View style={styles.nameView}>
+            <Text
+              style={styles.cardNameText}
+              onPress={() => onNameClicked(item.user)}
+            >
+              {item.user.name}
+            </Text>
+            <Text style={styles.cardNameText}>Read More {'>'}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -200,11 +203,16 @@ const styles = StyleSheet.create({
     color: Theme.colors.primaryDark,
     lineHeight: 20,
     fontWeight: '500',
-    marginBottom: 5,
+    marginBottom: 15,
   },
   cardNameText: {
     color: Theme.colors.primaryColor,
     fontSize: Theme.fontSize.medium,
     alignSelf: 'flex-start',
+  },
+  nameView: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
 });
