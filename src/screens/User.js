@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Theme from '../constants/Theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -30,6 +30,13 @@ const User = props => {
     <>
       {userData && (
         <View style={styles.container}>
+          <Icon
+            name={'chevron-back-outline'}
+            size={30}
+            color={Theme.colors.primaryDark}
+            onPress={() => props.navigation.goBack()}
+            style={{ padding: 20 }}
+          />
           <View style={styles.mainView}>
             <Text style={styles.nameText}>{userData.name}</Text>
             <Text style={styles.userNameText}>@ {userData.username}</Text>
