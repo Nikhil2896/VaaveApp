@@ -20,6 +20,30 @@ const PostList = props => {
   const [data, setData] = useState([]);
   const [postsData, setPostsData] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [debounceTimer, setDebounceTimer] = useState(null);
+
+  const handleSearchText = text => {
+    setSearchText(text);
+    if (debounceTimer) clearTimeout(debounceTimer);
+    const newTimer = setTimeout(() => {
+      runDebounceSearch(text);
+    }, 400);
+    setDebounceTimer(newTimer);
+  };
+
+  const runDebounceSearch = text => {
+    let search = text.toLowerCase();
+    if (!search) {
+      setPostsData(data);
+      return;
+    }
+    const results = data.filter(post => {
+      const titleMatch = post.title.toLowerCase().includes(search);
+      const usernameMatch = post.user.name.toLowerCase().includes(search);
+      return titleMatch || usernameMatch;
+    });
+    setPostsData(results);
+  };
 
   useEffect(() => {
     getPosts();
@@ -48,26 +72,11 @@ const PostList = props => {
     }
   };
 
-  const onSearch = () => {
-    if (searchText) {
-      Keyboard.dismiss();
-      let text = searchText.toLowerCase();
-      const results = postsData.filter(post => {
-        const titleMatch = post.title.toLowerCase().includes(text);
-        const usernameMatch = post.user.username.toLowerCase().includes(text);
-        return titleMatch || usernameMatch;
-      });
-      setPostsData(results);
-    } else {
-      setPostsData(data);
-    }
-  };
-
   const searchView = () => (
     <View style={styles.searchView}>
       <TextInput
         style={styles.textInput}
-        onChangeText={setSearchText}
+        onChangeText={handleSearchText}
         value={searchText}
         placeholder="Search post"
         placeholderTextColor={Theme.colors.placeHolder}
@@ -79,7 +88,6 @@ const PostList = props => {
         size={30}
         color={Theme.colors.primaryColor}
         style={styles.searchIcon}
-        onPress={onSearch}
       />
     </View>
   );
