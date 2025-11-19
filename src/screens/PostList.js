@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Text,
+  Image,
 } from 'react-native';
 import { API_BASE_URL } from '../constants/Constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -135,6 +136,18 @@ const PostList = props => {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          backgroundColor: Theme.colors.primaryColor,
+          alignItems: 'center',
+          padding: 20,
+        }}
+      >
+        <Image
+          source={require('../../assets/name.png')}
+          style={{ width: 180, height: 30 }}
+        />
+      </View>
       <ModelLoading visible={isloading} />
       {searchView()}
       <FlatList

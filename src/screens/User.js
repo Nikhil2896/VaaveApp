@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.white,
     elevation: 2,
     marginHorizontal: 20,
-    marginTop: 150,
+    marginTop: 80,
   },
   detailsView: {
     alignItems: 'center',
